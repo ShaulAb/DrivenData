@@ -1,12 +1,13 @@
 ---
 title: 'DengAI: Predicting Disease Spread - Benchmark (in R)'
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
+
 <br><br>
-Dengue fever is bad. It's real bad. Dengue is a mosquito-borne disease that occurs in tropical and sub-tropical parts of the world. In mild cases, symptoms are similar to the flu: fever, rash and muscle and joint pain. But severe cases are dangerous, and dengue fever can cause severe bleeding, low blood pressure and even death.
+Dengue fever is bad. It's real bad. Dengue is a mosquito-borne disease that occurs in tropical and sub-tropical parts of the world. In mild cases, syrequmptoms are similar to the flu: fever, rash and muscle and joint pain. But severe cases are dangerous, and dengue fever can cause severe bleeding, low blood pressure and even death.
 
 Because it is carried by mosquitoes, the transmission dynamics of dengue are related to climate variables such as temperature and precipitation. Although the relationship to climate is complex, a growing number of scientists argue that climate change is likely to produce distributional shifts that will have significant public health implications worldwide.
 <br><br>
@@ -14,7 +15,7 @@ Because it is carried by mosquitoes, the transmission dynamics of dengue are rel
 We've launched a competition to use open data to predict the occurrence of Dengue based on climatological data. Here's a first look at the data and how to get started!<br><br>
 <br><br>
 
-As always, we begin with imports of useful
+We begin by importing some useful libraries
 
 ```{r, warnings = FALSE, message=FALSE}
 # load libraries
@@ -30,8 +31,8 @@ This dataset has two cities in it: **San Juan**, Puerto Rico and **Iquitos**, Pe
 
 ```{r, warnings=FALSE, message=FALSE}
 ## Data Loading
-train_features = read_csv('dengue_features_train.csv')
-train_labels   = read_csv('dengue_labels_train.csv')
+train_features = read.csv('dengue_features_train.csv')
+train_labels   = read.csv('dengue_labels_train.csv')
 
 
 # Seperate data by city
@@ -235,7 +236,7 @@ Now that we've explored this data, it's time to start modeling. Our first step w
 preprocessData <- function(data_path, labels_path = NULL)
 {
   # load data 
-  df <- read_csv(data_path)
+  df <- read.csv(data_path)
   
   # features we want
   features = c("reanalysis_specific_humidity_g_per_kg", "reanalysis_dew_point_temp_k",
@@ -392,7 +393,7 @@ sj_test <- tests[[1]]; iq_test <- tests[[2]]
 sj_test$predicted = predict(sj_model , sj_test, type = 'response')
 iq_test$predicted = predict(iq_model , iq_test, type = 'response')
 
-submissions = read_csv('submission_format.csv')
+submissions = read.csv('submission_format.csv')
 inner_join(submissions, rbind(sj_test,iq_test)) %>%
   dplyr::select(city, year, weekofyear, total_cases = predicted) ->
 predictions
